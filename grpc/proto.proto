@@ -1,0 +1,47 @@
+// the following three lines should always be in the proto file
+syntax = "proto3";
+package Examdisys; // module that you called in the go.mod
+option go_package = "grpc/proto";
+
+message Response {
+    bool response = 1;
+}
+
+message WordDef{
+    string word = 1;
+    string definition = 2;
+}
+
+message Def{
+    string definition = 1;
+}
+
+message Word{
+    string word = 1;
+}
+
+message Empty {}
+
+
+message LeaderMessage {
+    int32 id = 1;
+    bool isLeader = 2;
+}
+
+message ReplicationValue {
+    int32 value = 1;
+}
+
+message ReplicationAck {}
+
+service DictionaryService{
+    rpc Add (WordDef) returns (Response) {}
+    rpc Read(Word) returns (Def) {}
+    rpc GetLeaderRequest(Empty) returns (LeaderMessage) {}
+    rpc Replicate(WordDef) returns (ReplicationAck) {}
+}
+
+
+//go mod init Examdisys (Hvad mappen hedder) OBS this have to be exactly the same as the go_package name on top of this document
+//protoc --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative grpc/proto.proto
+//go mod tidy

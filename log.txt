@@ -1,0 +1,19 @@
+2023/01/03 12:41:54 Server started at port 5001
+2023/01/03 12:41:54 Server with id: 5001 connected to replicaclient with id: 5001
+2023/01/03 12:41:54 Server started at port 5002
+2023/01/03 12:41:54 Server with id: 5002 connected to replicaclient with id: 5001
+2023/01/03 12:41:55 Server with id: 5001 connected to replicaclient with id: 5002
+2023/01/03 12:41:56 Server with id: 5002 connected to replicaclient with id: 5002
+2023/01/03 12:42:26 The leader added the word: Hello and the definition: Hej to the dictionary
+2023/01/03 12:42:26 Server with id: 5001 now has updated word: Hello with definition: Hej 
+2023/01/03 12:42:26 Server with id: 5002 now has updated word: Hello with definition: Hej 
+2023/01/03 12:42:39 Server with id: 5002 returned the defintion: Hej to the word: word:"Hello"
+2023/01/03 12:42:39 Server with id: 5001 returned the defintion: definition:"Hej" to the word: word:"Hello"
+2023/01/03 12:42:39 Server with id: 5002 returned the defintion: Hej to the word: word:"Hello"
+2023/01/03 12:42:51 The leader added the word: Hello and the definition: Hola to the dictionary
+2023/01/03 12:42:51 Server with id: 5001 now has updated word: Hello with definition: Hola 
+2023/01/03 12:42:51 Server with id: 5002 now has updated word: Hello with definition: Hola 
+2023/01/03 12:42:54 Server with id: 5001 found that the leader has crashed
+2023/01/03 12:42:54 A new leader must be assigned
+2023/01/03 12:42:54 Server with id: 5001 is now the new leader!
+2023/01/03 12:43:01 Server with id: 5001 returned the defintion: Hola to the word: word:"Hello"
