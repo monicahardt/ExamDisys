@@ -17,3 +17,7 @@
 2023/01/03 12:42:54 A new leader must be assigned
 2023/01/03 12:42:54 Server with id: 5001 is now the new leader!
 2023/01/03 12:43:01 Server with id: 5001 returned the defintion: Hola to the word: word:"Hello"
+
+
+This log file is copied from the generated log.log file that is generated when the program is started
+Therefor this txt file just shows a posibble execution

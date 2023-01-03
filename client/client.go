@@ -32,12 +32,11 @@ var (
 	clientPort = flag.Int("cPort", 0, "client port number")
 )
 
-//var frontend *Frontend
 
 func main() {
 
 	flag.Parse()
-	//frontend := newFrontend()
+	
 
 	client := &Client{
 		servers:    make([]Server, 0),
@@ -52,19 +51,19 @@ func main() {
 		input := scanner.Text()
 	
 		if input == "add" {
-			scanner.Scan() //The next scan is the word and definition to add to the dictionary
+			scanner.Scan() //The next scan is the word to add to the dictionary
 			toAddWord := scanner.Text()
 
-			scanner.Scan()
+			scanner.Scan() //The next scan is the definition to add to the dictionary
 			toAddDef := scanner.Text()
 
-			//call each server ask who is the leader
 			for i := 0; i < len(client.servers); i++ {
 				reponse, err := client.servers[i].server.Add(context.Background(), &proto.WordDef{Word: toAddWord, Definition: toAddDef})
 
 				if(err != nil){
 					log.Println("The client found out that a server is crashed")
 					client.servers = removeServer(client.servers,i)
+					fmt.Println("Something went wrong in adding your word to the dictionary. Try again")
 				} else {
 					if(reponse.Response == true){
 						fmt.Println("You added a new word to the dictionary")
@@ -90,10 +89,8 @@ func main() {
 						fmt.Println("The word did not exist in the dictionary")
 					} else {
 						definition = def.Definition
-						//fmt.Printf("The definition for the word was: %v\n", def.Definition)
+					}
 				}
-			}
-				
 			}
 			fmt.Printf("The definition for the word was: %v\n", definition)
 		}
@@ -108,7 +105,7 @@ func (c *Client) connectToServer(portNumber int32) {
 	if err != nil {
 		log.Printf("Could not connect: %s\n", err)
 	}
-	//if nothing is wrong
+
 	log.Printf("Client connected to server at port: %v\n", portNumber)
 
 	newServerToAdd := proto.NewDictionaryServiceClient(conn)

@@ -166,12 +166,14 @@ func (s *Server) Add(ctx context.Context, in *proto.WordDef) (*proto.Response, e
 		//after updating itself, we have to notify the other clients
 		//with raft this is done with a heartbeat method
 		for i := 0; i < len(s.serverclients); i++ {
-			//calling replicate with the value of the leader
+			//calling replicate with the value of the leader if it is not the leader itself
+			if(s.serverclients[i].port != s.port){
 			_, err := s.serverclients[i].replicaClient.Replicate(context.Background(),&proto.WordDef{Word: in.Word, Definition: s.dictionary[in.Word]})
 			if(err != nil){
 				log.Println("Failed to update a replica")
 				return &proto.Response{Response: false}, nil
 			}
+		}
 		}
 	} else {
 		//here we do nothing. The leader is responsible for updating the replicas
@@ -226,8 +228,8 @@ func (s *Server) heartbeat() {
 				log.Println("A new leader must be assigned")
 
 				// We now need to assign a new leader
-				//each replicationclient has a port. We assign the leader role
-				//to the client with the highest portnumber
+				//	We assign the leader role
+				// to the client with the highest portnumber
 				// Next time the other nodes ping us with the heartbeat they will learn that we are the new leader.
 
 				// Determine the node with the highest ID/port
@@ -242,8 +244,6 @@ func (s *Server) heartbeat() {
 					s.isLeader = true
 					log.Printf("Server with id: %v is now the new leader!\n", s.port)
 				}
-				//log.Println("A new leader has been picked")
-				//log.Printf("the server with port: %v, has boolean isLeader = %v ", s.port, s.isLeader)
 			} else {
 				log.Printf("Server with id: %v found that a replicaclient has crashed\n", s.port)
 			}
